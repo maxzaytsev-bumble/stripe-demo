@@ -6,7 +6,6 @@ coverage/
 
 # Dependencies
 node_modules/
-package-lock.json
 
 # Generated files
 next-env.d.ts
