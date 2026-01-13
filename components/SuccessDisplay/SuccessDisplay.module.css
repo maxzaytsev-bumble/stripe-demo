@@ -1,0 +1,90 @@
+.container {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #fff9e6 0%, #ffecb3 100%);
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.successCard {
+  background: rgb(255 255 255 / 80%);
+  backdrop-filter: blur(10px);
+  padding: 60px 48px;
+  border-radius: 20px;
+  border: 3px solid #000;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 4px 4px 0 #000;
+  margin-bottom: 32px;
+}
+
+.logo {
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.successIcon {
+  font-size: 80px;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 16px;
+  line-height: 1.3;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.form {
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (width <= 768px) {
+  .successCard {
+    padding: 48px 32px;
+  }
+
+  .successIcon {
+    font-size: 64px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+}
+
+@media (width <= 480px) {
+  .successCard {
+    padding: 40px 24px;
+  }
+
+  .successIcon {
+    font-size: 56px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+}

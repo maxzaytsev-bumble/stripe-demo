@@ -1,108 +1,162 @@
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
-}
-
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
-  display: flex;
-  flex-direction: row;
+.container {
   width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff9e6 0%, #ffecb3 100%);
+  padding: 0;
 }
 
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+.header {
+  padding: 32px 48px;
+  text-align: center;
+  background: rgb(255 255 255 / 60%);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid #ffd54f;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.logo {
+  font-size: 48px;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+  letter-spacing: -1px;
+  text-transform: none;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.hero {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px 48px;
+  text-align: center;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
+.heroTitle {
+  font-size: 64px;
+  font-weight: 800;
+  color: #000;
+  margin: 0 0 24px;
+  line-height: 1.1;
+  letter-spacing: -2px;
+}
+
+.heroSubtitle {
+  font-size: 22px;
+  color: #333;
+  line-height: 1.6;
+  margin: 0 0 48px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.benefits {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 48px 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+}
+
+.benefitCard {
+  background: rgb(255 255 255 / 80%);
+  backdrop-filter: blur(10px);
+  padding: 40px 32px;
+  border-radius: 20px;
+  border: 3px solid #000;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.benefitCard:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+}
+
+.benefitIcon {
+  font-size: 56px;
+  margin-bottom: 20px;
+}
+
+.benefitTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 16px;
+}
+
+.benefitDescription {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (width <= 768px) {
+  .header {
+    padding: 24px;
   }
 
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
-}
-
-@media (width <= 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
   .logo {
-    filter: invert();
+    font-size: 36px;
   }
 
-  .page {
-    --background: #000;
-    --foreground: #000;
-    --text-primary: #ededed;
-    --text-secondary: #999;
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
+  .hero {
+    padding: 60px 24px;
+  }
+
+  .heroTitle {
+    font-size: 42px;
+  }
+
+  .heroSubtitle {
+    font-size: 18px;
+    margin-bottom: 36px;
+  }
+
+  .ctaButton {
+    padding: 16px 40px;
+    font-size: 18px;
+  }
+
+  .benefits {
+    padding: 40px 24px 60px;
+    gap: 24px;
+    grid-template-columns: 1fr;
+  }
+
+  .benefitCard {
+    padding: 32px 24px;
+  }
+
+  .benefitIcon {
+    font-size: 48px;
+  }
+
+  .benefitTitle {
+    font-size: 20px;
+  }
+
+  .benefitDescription {
+    font-size: 15px;
+  }
+}
+
+@media (width <= 480px) {
+  .logo {
+    font-size: 32px;
+  }
+
+  .heroTitle {
+    font-size: 36px;
+  }
+
+  .heroSubtitle {
+    font-size: 16px;
+  }
+
+  .ctaButton {
+    padding: 14px 32px;
+    font-size: 16px;
   }
 }
