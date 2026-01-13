@@ -16,7 +16,7 @@ export const SuccessDisplay: React.FC<SuccessDisplayProps> = ({
           <h3>Subscription to Mumble Swipe successful!</h3>
         </div>
       </div>
-      <form action="/create-portal-session" method="POST">
+      <form action="/api/create-portal-session" method="POST">
         <input
           type="hidden"
           id="session-id"
