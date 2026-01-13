@@ -6,6 +6,7 @@ import { Logo } from "@/components/Logo/Logo";
 import { Button } from "@/components/Button/Button";
 import { type Product } from "@/lib/stripe";
 import { fetcher } from "@/lib/fetcher";
+import { formatPrice, formatInterval } from "@/lib/formatters";
 import styles from "./ProductDisplay.module.css";
 
 export const ProductDisplay = () => {
@@ -14,22 +15,6 @@ export const ProductDisplay = () => {
     error,
     isLoading,
   } = useSWR<Product[]>("/api/products", fetcher);
-
-  const formatPrice = (amount: number | null, currency: string) => {
-    if (amount === null) return "Free";
-    const price = amount / 100;
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: currency.toUpperCase(),
-    }).format(price);
-  };
-
-  const formatInterval = (interval: string, count: number) => {
-    if (count === 1) {
-      return `/ ${interval}`;
-    }
-    return `/ ${count} ${interval}s`;
-  };
 
   if (isLoading) {
     return (
