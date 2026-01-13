@@ -42,6 +42,10 @@ export const ProductDisplay = () => {
     );
   }
 
+  // Separate products by type
+  const subscriptions = products.filter((p) => p.type === "recurring");
+  const oneTimeProducts = products.filter((p) => p.type === "one_time");
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -50,33 +54,78 @@ export const ProductDisplay = () => {
           Start your journey to meaningful connections
         </p>
       </div>
-      <div className={styles.productsGrid}>
-        {products.map((product) => (
-          <div key={product.id} className={styles.product}>
-            <div className={styles.logo}>
-              <Logo />
-            </div>
-            <div className={styles.description}>
-              <h3>{product.name}</h3>
-              <h5>
-                {formatPrice(product.price, product.currency)}{" "}
-                {formatInterval(product.interval, product.intervalCount)}
-              </h5>
-              {product.description && <p>{product.description}</p>}
-            </div>
-            <form
-              action="/api/create-checkout-session"
-              method="POST"
-              className={styles.form}
-            >
-              <input type="hidden" name="price_id" value={product.priceId} />
-              <Button type="submit" fullWidth size="medium">
-                Checkout
-              </Button>
-            </form>
+
+      {subscriptions.length > 0 && (
+        <div className={styles.section}>
+          <h2 className={styles.sectionTitle}>Subscription Plans</h2>
+          <div className={styles.productsGrid}>
+            {subscriptions.map((product) => (
+              <div key={product.id} className={styles.product}>
+                <div className={styles.logo}>
+                  <Logo />
+                </div>
+                <div className={styles.description}>
+                  <h3>{product.name}</h3>
+                  <h5>
+                    {formatPrice(product.price, product.currency)}{" "}
+                    {product.interval &&
+                      formatInterval(product.interval, product.intervalCount!)}
+                  </h5>
+                  {product.description && <p>{product.description}</p>}
+                </div>
+                <form
+                  action="/api/create-checkout-session"
+                  method="POST"
+                  className={styles.form}
+                >
+                  <input
+                    type="hidden"
+                    name="price_id"
+                    value={product.priceId}
+                  />
+                  <Button type="submit" fullWidth size="medium">
+                    Checkout
+                  </Button>
+                </form>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+
+      {oneTimeProducts.length > 0 && (
+        <div className={styles.section}>
+          <h2 className={styles.sectionTitle}>One-Time Purchases</h2>
+          <div className={styles.productsGrid}>
+            {oneTimeProducts.map((product) => (
+              <div key={product.id} className={styles.product}>
+                <div className={styles.logo}>
+                  <Logo />
+                </div>
+                <div className={styles.description}>
+                  <h3>{product.name}</h3>
+                  <h5>{formatPrice(product.price, product.currency)}</h5>
+                  {product.description && <p>{product.description}</p>}
+                </div>
+                <form
+                  action="/api/create-checkout-session"
+                  method="POST"
+                  className={styles.form}
+                >
+                  <input
+                    type="hidden"
+                    name="price_id"
+                    value={product.priceId}
+                  />
+                  <Button type="submit" fullWidth size="medium">
+                    Checkout
+                  </Button>
+                </form>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

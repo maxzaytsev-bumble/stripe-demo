@@ -16,6 +16,7 @@ export type Product = {
   priceId: string;
   price: number | null;
   currency: string;
-  interval: string;
-  intervalCount: number;
+  type: "recurring" | "one_time";
+  interval?: string;
+  intervalCount?: number;
 };

@@ -20,6 +20,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Fetch the price to determine its type
+    const price = await stripe.prices.retrieve(priceId);
+    const mode = price.type === "recurring" ? "subscription" : "payment";
+
     const YOUR_DOMAIN =
       process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
@@ -31,7 +35,7 @@ export async function POST(request: NextRequest) {
           quantity: 1,
         },
       ],
-      mode: "subscription",
+      mode,
       success_url: `${YOUR_DOMAIN}/paywall?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${YOUR_DOMAIN}/paywall?canceled=true`,
     });
