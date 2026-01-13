@@ -7,3 +7,15 @@ if (!process.env.STRIPE_SECRET_KEY) {
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   typescript: true,
 });
+
+export type Product = {
+  id: string;
+  name: string;
+  description: string | null;
+  images: string[];
+  priceId: string;
+  price: number | null;
+  currency: string;
+  interval: string;
+  intervalCount: number;
+};

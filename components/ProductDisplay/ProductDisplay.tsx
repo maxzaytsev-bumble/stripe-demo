@@ -3,19 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { Logo } from "@/components/Logo/Logo";
 import { Button } from "@/components/Button/Button";
+import { type Product } from "@/lib/stripe";
 import styles from "./ProductDisplay.module.css";
-
-interface Product {
-  id: string;
-  name: string;
-  description: string | null;
-  images: string[];
-  priceId: string;
-  price: number | null;
-  currency: string;
-  interval: string;
-  intervalCount: number;
-}
 
 export const ProductDisplay = () => {
   const [products, setProducts] = useState<Product[]>([]);

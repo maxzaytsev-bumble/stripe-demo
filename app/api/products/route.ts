@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
+import { stripe, type Product } from "@/lib/stripe";
 import type Stripe from "stripe";
 
 export async function GET() {
@@ -11,12 +11,12 @@ export async function GET() {
     });
 
     // Filter to only include products that are active
-    const products = prices.data
+    const products: Product[] = prices.data
       .filter((price) => {
         const product = price.product as Stripe.Product;
         return typeof product === "object" && product.active;
       })
-      .map((price) => {
+      .map((price): Product => {
         const product = price.product as Stripe.Product;
         return {
           id: product.id,
@@ -26,8 +26,8 @@ export async function GET() {
           priceId: price.id,
           price: price.unit_amount,
           currency: price.currency,
-          interval: price.recurring?.interval,
-          intervalCount: price.recurring?.interval_count,
+          interval: price.recurring?.interval || "month",
+          intervalCount: price.recurring?.interval_count || 1,
         };
       });
 
