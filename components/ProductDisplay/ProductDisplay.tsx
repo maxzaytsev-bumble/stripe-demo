@@ -1,34 +1,19 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
+import useSWR from "swr";
 import { Logo } from "@/components/Logo/Logo";
 import { Button } from "@/components/Button/Button";
 import { type Product } from "@/lib/stripe";
+import { fetcher } from "@/lib/fetcher";
 import styles from "./ProductDisplay.module.css";
 
 export const ProductDisplay = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("/api/products");
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data = await response.json();
-        setProducts(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  const {
+    data: products,
+    error,
+    isLoading,
+  } = useSWR<Product[]>("/api/products", fetcher);
 
   const formatPrice = (amount: number | null, currency: string) => {
     if (amount === null) return "Free";
@@ -46,7 +31,7 @@ export const ProductDisplay = () => {
     return `/ ${count} ${interval}s`;
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className={styles.container}>
         <div className={styles.loading}>Loading products...</div>
@@ -57,12 +42,14 @@ export const ProductDisplay = () => {
   if (error) {
     return (
       <div className={styles.container}>
-        <div className={styles.error}>Error: {error}</div>
+        <div className={styles.error}>
+          Error: {error instanceof Error ? error.message : "An error occurred"}
+        </div>
       </div>
     );
   }
 
-  if (products.length === 0) {
+  if (!products || products.length === 0) {
     return (
       <div className={styles.container}>
         <div className={styles.empty}>No products available.</div>
