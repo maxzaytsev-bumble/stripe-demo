@@ -28,7 +28,6 @@ export async function GET() {
           currency: price.currency,
           interval: price.recurring?.interval,
           intervalCount: price.recurring?.interval_count,
-          lookupKey: price.lookup_key,
         };
       });
 

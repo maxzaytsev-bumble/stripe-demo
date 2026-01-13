@@ -15,7 +15,6 @@ interface Product {
   currency: string;
   interval: string;
   intervalCount: number;
-  lookupKey: string | null;
 }
 
 export const ProductDisplay = () => {
@@ -109,11 +108,7 @@ export const ProductDisplay = () => {
               method="POST"
               className={styles.form}
             >
-              <input
-                type="hidden"
-                name="lookup_key"
-                value={product.lookupKey || product.priceId}
-              />
+              <input type="hidden" name="price_id" value={product.priceId} />
               <Button type="submit" fullWidth size="medium">
                 Checkout
               </Button>
