@@ -1,9 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import useSWRMutation from "swr/mutation";
 import { Logo } from "@/components/Logo/Logo";
 import { Button } from "@/components/Button/Button";
-import { type Product } from "@/lib/stripe";
+import {
+  type Product,
+  type CheckoutResponse,
+  isHostedCheckoutResponse,
+  isCustomCheckoutResponse,
+} from "@/lib/stripe";
+import { mutationFetcher } from "@/lib/fetcher";
 import { formatPrice, formatInterval } from "@/lib/formatters";
 import { useCustomCheckout } from "@/lib/feature-flags";
 import styles from "./ProductCard.module.css";
@@ -13,14 +20,17 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const customCheckoutEnabled = useCustomCheckout();
+
+  const { trigger, isMutating, error } = useSWRMutation<
+    CheckoutResponse,
+    Error,
+    string,
+    FormData
+  >("/api/create-checkout-session", mutationFetcher<CheckoutResponse>);
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError(null);
 
     try {
       const formData = new FormData();
@@ -31,29 +41,21 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         formData.append("ui_mode", "custom");
       }
 
-      const response = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await trigger(formData);
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to create checkout session");
-      }
-
-      // Route based on checkout type
-      if (customCheckoutEnabled && data.client_secret) {
+      // Route based on checkout type using type guards
+      if (isCustomCheckoutResponse(response)) {
         // Custom checkout: redirect to custom page with client_secret
-        window.location.href = `/checkout/custom?client_secret=${data.client_secret}&mode=${data.mode}`;
-      } else {
+        window.location.href = `/checkout/custom?client_secret=${response.client_secret}&mode=${response.mode}`;
+      } else if (isHostedCheckoutResponse(response)) {
         // Hosted checkout: redirect to Stripe
-        window.location.href = data.url;
+        window.location.href = response.url;
+      } else {
+        throw new Error("Invalid response format");
       }
     } catch (err) {
-      setIsLoading(false);
-      setError(err instanceof Error ? err.message : "Something went wrong");
       console.error("Checkout error:", err);
+      // Error automatically captured by SWR in 'error' state
     }
   };
 
@@ -72,10 +74,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         {product.description && <p>{product.description}</p>}
       </div>
       <form onSubmit={handleCheckout} className={styles.form}>
-        <Button type="submit" fullWidth size="medium" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Checkout"}
+        <Button type="submit" fullWidth size="medium" disabled={isMutating}>
+          {isMutating ? "Loading..." : "Checkout"}
         </Button>
-        {error && <p className={styles.error}>{error}</p>}
+        {error && <p className={styles.error}>{error.message}</p>}
       </form>
     </div>
   );
