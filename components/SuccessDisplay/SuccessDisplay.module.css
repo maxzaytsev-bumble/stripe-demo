@@ -48,11 +48,6 @@
   line-height: 1.6;
 }
 
-.form {
-  width: 100%;
-  max-width: 600px;
-}
-
 @media (width <= 768px) {
   .successCard {
     padding: 48px 32px;

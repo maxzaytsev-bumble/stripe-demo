@@ -5,6 +5,7 @@ import { Logo } from "@/components/Logo/Logo";
 import { Button } from "@/components/Button/Button";
 import { type Product } from "@/lib/stripe";
 import { formatPrice, formatInterval } from "@/lib/formatters";
+import { useCustomCheckout } from "@/lib/feature-flags";
 import styles from "./ProductCard.module.css";
 
 interface ProductCardProps {
@@ -14,6 +15,7 @@ interface ProductCardProps {
 export const ProductCard = ({ product }: ProductCardProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const customCheckoutEnabled = useCustomCheckout();
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +25,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     try {
       const formData = new FormData();
       formData.append("price_id", product.priceId);
+
+      // Add ui_mode parameter if custom checkout is enabled
+      if (customCheckoutEnabled) {
+        formData.append("ui_mode", "custom");
+      }
 
       const response = await fetch("/api/create-checkout-session", {
         method: "POST",
@@ -35,8 +42,14 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         throw new Error(data.error || "Failed to create checkout session");
       }
 
-      // Redirect to Stripe Checkout
-      window.location.href = data.url;
+      // Route based on checkout type
+      if (customCheckoutEnabled && data.client_secret) {
+        // Custom checkout: redirect to custom page with client_secret
+        window.location.href = `/checkout/custom?client_secret=${data.client_secret}&mode=${data.mode}`;
+      } else {
+        // Hosted checkout: redirect to Stripe
+        window.location.href = data.url;
+      }
     } catch (err) {
       setIsLoading(false);
       setError(err instanceof Error ? err.message : "Something went wrong");

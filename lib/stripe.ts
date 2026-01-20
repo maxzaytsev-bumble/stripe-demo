@@ -20,3 +20,32 @@ export type Product = {
   interval?: string;
   intervalCount?: number;
 };
+
+/**
+ * Response from hosted checkout session creation
+ */
+export type HostedCheckoutResponse = {
+  url: string;
+};
+
+/**
+ * Response from custom checkout session creation
+ */
+export type CustomCheckoutResponse = {
+  client_secret: string;
+  mode: string;
+};
+
+/**
+ * Unified checkout response type
+ */
+export type CheckoutResponse = HostedCheckoutResponse | CustomCheckoutResponse;
+
+/**
+ * Session status response from Stripe
+ */
+export type SessionStatus = {
+  status: string;
+  customer_email: string | null;
+  payment_status: string;
+};

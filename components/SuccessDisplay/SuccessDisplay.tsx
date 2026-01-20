@@ -1,6 +1,6 @@
 import React from "react";
 import { Logo } from "@/components/Logo/Logo";
-import { Button } from "@/components/Button/Button";
+import { BillingPortalForm } from "@/components/BillingPortalForm/BillingPortalForm";
 import styles from "./SuccessDisplay.module.css";
 
 interface SuccessDisplayProps {
@@ -23,21 +23,7 @@ export const SuccessDisplay: React.FC<SuccessDisplayProps> = ({
           today!
         </p>
       </div>
-      <form
-        action="/api/create-portal-session"
-        method="POST"
-        className={styles.form}
-      >
-        <input
-          type="hidden"
-          id="session-id"
-          name="session_id"
-          value={sessionId}
-        />
-        <Button type="submit" fullWidth size="medium">
-          Manage your billing information
-        </Button>
-      </form>
+      <BillingPortalForm sessionId={sessionId} />
     </div>
   );
 };
