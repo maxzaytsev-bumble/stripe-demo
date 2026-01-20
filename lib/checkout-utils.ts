@@ -10,7 +10,7 @@ import type {
 export function isHostedCheckoutResponse(
   response: CheckoutResponse,
 ): response is HostedCheckoutResponse {
-  return "url" in response && typeof response.url === "string";
+  return "url" in response;
 }
 
 /**
@@ -21,7 +21,6 @@ export function isCustomCheckoutResponse(
 ): response is CustomCheckoutResponse {
   return (
     "client_secret" in response &&
-    typeof response.client_secret === "string" &&
     "mode" in response &&
     typeof response.mode === "string"
   );
