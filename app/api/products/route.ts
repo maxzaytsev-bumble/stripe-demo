@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { stripe, type Product } from "@/lib/stripe";
+import { stripe } from "@/lib/stripe";
+import type { Product } from "@/lib/types";
 import type Stripe from "stripe";
 
 export async function GET() {

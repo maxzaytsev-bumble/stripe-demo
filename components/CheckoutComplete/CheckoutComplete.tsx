@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { Logo } from "@/components/Logo/Logo";
 import { fetcher } from "@/lib/fetcher";
 import { BillingPortalForm } from "@/components/BillingPortalForm/BillingPortalForm";
-import type { SessionStatus } from "@/lib/stripe";
+import type { SessionStatus } from "@/lib/types";
 import styles from "./CheckoutComplete.module.css";
 
 type CheckoutCompleteProps = {

@@ -3,7 +3,7 @@
 import React from "react";
 import useSWR from "swr";
 import { ProductCard } from "@/components/ProductCard/ProductCard";
-import { type Product } from "@/lib/stripe";
+import { type Product } from "@/lib/types";
 import { fetcher } from "@/lib/fetcher";
 import styles from "./ProductDisplay.module.css";
 

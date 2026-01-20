@@ -4,12 +4,11 @@ import React from "react";
 import useSWRMutation from "swr/mutation";
 import { Logo } from "@/components/Logo/Logo";
 import { Button } from "@/components/Button/Button";
+import { type Product, type CheckoutResponse } from "@/lib/types";
 import {
-  type Product,
-  type CheckoutResponse,
   isHostedCheckoutResponse,
   isCustomCheckoutResponse,
-} from "@/lib/stripe";
+} from "@/lib/checkout-utils";
 import { mutationFetcher } from "@/lib/fetcher";
 import { formatPrice, formatInterval } from "@/lib/formatters";
 import { useCustomCheckout } from "@/lib/feature-flags";

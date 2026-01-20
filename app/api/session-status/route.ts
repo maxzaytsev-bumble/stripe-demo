@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import type { SessionStatus } from "@/lib/stripe";
+import type { SessionStatus } from "@/lib/types";
 
 /**
  * GET /api/session-status
