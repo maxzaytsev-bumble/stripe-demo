@@ -42,3 +42,21 @@ export type SessionStatus = {
   customer_email: string | null;
   payment_status: string;
 };
+
+/**
+ * Checkout details response (product and price info)
+ */
+export type CheckoutDetails = {
+  product: {
+    name: string;
+    description: string | null;
+  } | null;
+  price: {
+    amount: number | null;
+    currency: string;
+    recurring: {
+      interval: string;
+      interval_count: number;
+    } | null;
+  } | null;
+};

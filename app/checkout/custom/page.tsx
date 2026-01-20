@@ -2,9 +2,12 @@
 
 import { Suspense, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import useSWR from "swr";
 import { CheckoutProvider } from "@stripe/react-stripe-js/checkout";
 import { getStripePromise } from "@/lib/stripe-client";
 import { CustomCheckoutForm } from "@/components/CustomCheckoutForm/CustomCheckoutForm";
+import { fetcher } from "@/lib/fetcher";
+import { type CheckoutDetails } from "@/lib/types";
 
 function CustomCheckoutContent() {
   const searchParams = useSearchParams();
@@ -18,6 +21,14 @@ function CustomCheckoutContent() {
       router.push("/paywall");
     }
   }, [client_secret, mode, router]);
+
+  // Fetch checkout details from the backend
+  const { data: checkoutDetails } = useSWR<CheckoutDetails>(
+    client_secret
+      ? `/api/checkout-details?client_secret=${encodeURIComponent(client_secret)}`
+      : null,
+    fetcher,
+  );
 
   // Don't render if params are missing
   if (!client_secret || !mode) {
@@ -36,7 +47,11 @@ function CustomCheckoutContent() {
         },
       }}
     >
-      <CustomCheckoutForm mode={mode} />
+      <CustomCheckoutForm
+        mode={mode}
+        product={checkoutDetails?.product ?? null}
+        price={checkoutDetails?.price ?? null}
+      />
     </CheckoutProvider>
   );
 }

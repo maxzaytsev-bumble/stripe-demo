@@ -4,13 +4,30 @@ import { useState, FormEvent } from "react";
 import { useCheckout, PaymentElement } from "@stripe/react-stripe-js/checkout";
 import { Button } from "@/components/Button/Button";
 import { Logo } from "@/components/Logo/Logo";
+import { formatPrice, formatInterval } from "@/lib/formatters";
 import styles from "./CustomCheckoutForm.module.css";
 
 type CustomCheckoutFormProps = {
   mode: string;
+  product: {
+    name: string;
+    description: string | null;
+  } | null;
+  price: {
+    amount: number | null;
+    currency: string;
+    recurring: {
+      interval: string;
+      interval_count: number;
+    } | null;
+  } | null;
 };
 
-export function CustomCheckoutForm({ mode }: CustomCheckoutFormProps) {
+export function CustomCheckoutForm({
+  mode,
+  product,
+  price,
+}: CustomCheckoutFormProps) {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -83,6 +100,24 @@ export function CustomCheckoutForm({ mode }: CustomCheckoutFormProps) {
         <h1 className={styles.title}>
           {mode === "subscription" ? "Subscribe" : "Complete Purchase"}
         </h1>
+
+        {product && price && (
+          <div className={styles.productInfo}>
+            <h2 className={styles.productName}>{product.name}</h2>
+            <p className={styles.productPrice}>
+              {formatPrice(price.amount, price.currency)}
+              {price.recurring &&
+                " " +
+                  formatInterval(
+                    price.recurring.interval,
+                    price.recurring.interval_count,
+                  )}
+            </p>
+            {product.description && (
+              <p className={styles.productDescription}>{product.description}</p>
+            )}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.field}>
