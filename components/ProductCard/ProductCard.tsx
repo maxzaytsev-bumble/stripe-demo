@@ -54,7 +54,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       }
     } catch (err) {
       console.error("Checkout error:", err);
-      // Error automatically captured by SWR in 'error' state
     }
   };
 
