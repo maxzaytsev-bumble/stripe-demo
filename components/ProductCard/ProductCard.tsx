@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Logo } from "@/components/Logo/Logo";
 import { Button } from "@/components/Button/Button";
 import { type Product } from "@/lib/stripe";
@@ -12,6 +12,38 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleCheckout = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const formData = new FormData();
+      formData.append("price_id", product.priceId);
+
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create checkout session");
+      }
+
+      // Redirect to Stripe Checkout
+      window.location.href = data.url;
+    } catch (err) {
+      setIsLoading(false);
+      setError(err instanceof Error ? err.message : "Something went wrong");
+      console.error("Checkout error:", err);
+    }
+  };
+
   return (
     <div className={styles.product}>
       <div className={styles.logo}>
@@ -26,15 +58,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </h5>
         {product.description && <p>{product.description}</p>}
       </div>
-      <form
-        action="/api/create-checkout-session"
-        method="POST"
-        className={styles.form}
-      >
-        <input type="hidden" name="price_id" value={product.priceId} />
-        <Button type="submit" fullWidth size="medium">
-          Checkout
+      <form onSubmit={handleCheckout} className={styles.form}>
+        <Button type="submit" fullWidth size="medium" disabled={isLoading}>
+          {isLoading ? "Loading..." : "Checkout"}
         </Button>
+        {error && <p className={styles.error}>{error}</p>}
       </form>
     </div>
   );

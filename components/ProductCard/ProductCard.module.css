@@ -52,6 +52,17 @@
 
 .form {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
 }
 
 @media (width <= 768px) {

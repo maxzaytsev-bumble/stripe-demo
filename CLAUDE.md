@@ -35,7 +35,7 @@ This is a Stripe checkout demo built on Next.js 15 (App Router). The core patter
 
 1. **Product Fetching**: `/api/products` fetches active prices from Stripe (both recurring subscriptions and one-time purchases) and transforms them into a unified `Product` type
 2. **Client Display**: `ProductDisplay` component uses SWR to fetch and cache products, separating them by type (subscription vs one-time)
-3. **Checkout Flow**: Forms POST to `/api/create-checkout-session` with `price_id`, which creates a Stripe Checkout session and redirects
+3. **Checkout Flow**: AJAX POST to `/api/create-checkout-session` with `price_id`, which creates a Stripe Checkout session and returns the URL as JSON for client-side redirect
 4. **Webhook Handling**: `/api/webhook` receives Stripe events (subscription lifecycle, entitlements) with signature verification
 
 ### Key Type: Product
@@ -52,13 +52,15 @@ The central type lives in `lib/stripe.ts`:
 - Products are fetched client-side and cached by SWR
 - No server-side data fetching for products (all client-side)
 
-### Form-Based Checkout
+### AJAX-Based Checkout
 
-Product checkout uses native HTML forms POSTing to API routes (not JavaScript `fetch`). This ensures:
+Product checkout uses AJAX (`fetch`) to submit to API routes, providing enhanced UX:
 
-- Works without JavaScript enabled
-- Automatic redirect handling from Stripe Checkout session
-- FormData parsing in API routes
+- Loading states during checkout session creation
+- Client-side error handling and display
+- Prevents double-submissions with disabled button state
+- API returns JSON `{ url: session.url }`, client redirects via `window.location.href`
+- Better user feedback compared to native form submission
 
 ### Component Structure
 
