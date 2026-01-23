@@ -17,7 +17,7 @@ export const SuccessDisplay: React.FC<SuccessDisplayProps> = ({
           <Logo />
         </div>
         <div className={styles.successIcon}>🎉</div>
-        <h1 className={styles.title}>Welcome to Mumble!</h1>
+        <h1 className={styles.title}>Welcome to BrandName!</h1>
         <p className={styles.subtitle}>
           Your subscription is now active. Start connecting with amazing people
           today!

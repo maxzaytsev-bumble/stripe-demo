@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mumble - Find Your Perfect Match",
+  title: "BrandName - Find Your Perfect Match",
   description:
-    "Join thousands of singles finding meaningful connections through Mumble. Where conversations lead to lasting relationships.",
+    "Join thousands of singles finding meaningful connections through BrandName. Where conversations lead to lasting relationships.",
 };
 
 export default function RootLayout({

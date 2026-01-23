@@ -43,7 +43,53 @@ function CustomCheckoutContent() {
       options={{
         clientSecret: client_secret,
         elementsOptions: {
-          appearance: { theme: "stripe" },
+          appearance: {
+            theme: "stripe",
+            variables: {
+              colorPrimary: "#ffd54f",
+              colorBackground: "#ffffff",
+              colorText: "#000000",
+              colorDanger: "#df1b41",
+              fontFamily: "system-ui, sans-serif",
+              spacingUnit: "4px",
+              borderRadius: "12px",
+            },
+            rules: {
+              ".Tab": {
+                border: "2px solid #e0e0e0",
+                borderRadius: "12px",
+                padding: "16px",
+                backgroundColor: "#f5f5f5",
+                boxShadow: "none",
+              },
+              ".Tab:hover": {
+                backgroundColor: "#ebebeb",
+              },
+              ".Tab--selected": {
+                backgroundColor: "#ffd54f",
+                border: "2px solid #ffd54f",
+                color: "#000000",
+              },
+              ".Tab--selected:hover": {
+                backgroundColor: "#ffc933",
+              },
+              ".Input": {
+                border: "2px solid #e0e0e0",
+                borderRadius: "8px",
+                padding: "12px",
+                backgroundColor: "#ffffff",
+              },
+              ".Input:focus": {
+                border: "2px solid #ffd54f",
+                boxShadow: "0 0 0 3px rgba(255, 213, 79, 0.1)",
+              },
+              ".Label": {
+                fontWeight: "600",
+                fontSize: "14px",
+                color: "#000000",
+              },
+            },
+          },
         },
       }}
     >

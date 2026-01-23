@@ -3,7 +3,7 @@
 import { useState, FormEvent } from "react";
 import { useCheckout, PaymentElement } from "@stripe/react-stripe-js/checkout";
 import { Button } from "@/components/Button/Button";
-import { Logo } from "@/components/Logo/Logo";
+import { EmailInput } from "@/components/EmailInput/EmailInput";
 import { formatPrice, formatInterval } from "@/lib/formatters";
 import styles from "./CustomCheckoutForm.module.css";
 
@@ -37,7 +37,6 @@ export function CustomCheckoutForm({
   if (checkoutState.type === "loading") {
     return (
       <div className={styles.container}>
-        <Logo />
         <div className={styles.loading}>Loading checkout...</div>
       </div>
     );
@@ -46,7 +45,6 @@ export function CustomCheckoutForm({
   if (checkoutState.type === "error") {
     return (
       <div className={styles.container}>
-        <Logo />
         <div className={styles.error}>
           Error loading checkout: {checkoutState.error.message}
         </div>
@@ -95,49 +93,39 @@ export function CustomCheckoutForm({
 
   return (
     <div className={styles.container}>
-      <Logo />
-      <div className={styles.card}>
-        <h1 className={styles.title}>
-          {mode === "subscription" ? "Subscribe" : "Complete Purchase"}
-        </h1>
+      <div className={styles.content}>
+        <h1 className={styles.title}>Your purchase</h1>
 
         {product && price && (
-          <div className={styles.productInfo}>
-            <h2 className={styles.productName}>{product.name}</h2>
-            <p className={styles.productPrice}>
-              {formatPrice(price.amount, price.currency)}
-              {price.recurring &&
-                " " +
-                  formatInterval(
-                    price.recurring.interval,
-                    price.recurring.interval_count,
-                  )}
-            </p>
-            {product.description && (
-              <p className={styles.productDescription}>{product.description}</p>
-            )}
+          <div className={styles.purchaseSummary}>
+            <div className={styles.iconWrapper}></div>
+            <div className={styles.purchaseDetails}>
+              <div className={styles.purchaseTitle}>
+                <span className={styles.productName}>{product.name}</span>
+                <span className={styles.purchasePrice}>
+                  {formatPrice(price.amount, price.currency)}
+                </span>
+              </div>
+              {price.recurring && (
+                <p className={styles.recurringInfo}>
+                  {formatPrice(price.amount, price.currency)}
+                  {" " +
+                    formatInterval(
+                      price.recurring.interval,
+                      price.recurring.interval_count,
+                    )}{" "}
+                  starting from the next renewal
+                </p>
+              )}
+            </div>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.field}>
-            <label htmlFor="email" className={styles.label}>
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
-              className={styles.input}
-              disabled={isLoading}
-            />
-          </div>
+          <EmailInput email={email} onChange={setEmail} disabled={isLoading} />
 
           <div className={styles.field}>
-            <label className={styles.label}>Payment details</label>
+            <label className={styles.sectionLabel}>Payment method</label>
             <div className={styles.paymentElement}>
               <PaymentElement />
             </div>
@@ -150,8 +138,14 @@ export function CustomCheckoutForm({
             disabled={isLoading}
             className={styles.submitButton}
           >
-            {isLoading ? "Processing..." : "Pay now"}
+            {isLoading ? "Processing..." : "Accept and Pay"}
           </Button>
+
+          <p className={styles.disclaimer}>
+            {mode === "subscription"
+              ? `Recurring Billing. Cancel Anytime. You will be charged ${price ? formatPrice(price.amount, price.currency) : ""} - the ${mode === "subscription" ? "subscription" : "payment"} is processed immediately, and the billing cycle is updated based on the day you ${mode === "subscription" ? "subscribe" : "purchase"}. You will be charged the full amount for each billing period.`
+              : `One-time payment. You will be charged ${price ? formatPrice(price.amount, price.currency) : ""} immediately.`}
+          </p>
         </form>
       </div>
     </div>

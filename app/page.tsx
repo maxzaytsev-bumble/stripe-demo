@@ -5,14 +5,14 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.logo}>Mumble</h1>
+        <h1 className={styles.logo}>BrandName</h1>
       </header>
 
       <section className={styles.hero}>
         <h2 className={styles.heroTitle}>Find Your Perfect Match</h2>
         <p className={styles.heroSubtitle}>
           Join thousands of singles finding meaningful connections through
-          Mumble. Where conversations lead to lasting relationships.
+          BrandName. Where conversations lead to lasting relationships.
         </p>
         <Button as="link" href="/paywall">
           Get Started Today
