@@ -34,6 +34,10 @@ export type CustomCheckoutResponse = {
  */
 export type CheckoutResponse = HostedCheckoutResponse | CustomCheckoutResponse;
 
+export type PaymentIntentResponse = {
+  clientSecret: string;
+};
+
 /**
  * Session status response from Stripe
  */

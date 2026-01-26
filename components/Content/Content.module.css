@@ -1,0 +1,10 @@
+.root {
+  background: linear-gradient(135deg, #fff9e6 0%, #ffecb3 100%);
+  min-height: 100%;
+  display: flex;
+}
+
+.content {
+  max-width: 1200px;
+  padding: 0 40px;
+}

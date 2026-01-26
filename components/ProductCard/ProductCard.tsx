@@ -4,11 +4,7 @@ import React from "react";
 import useSWRMutation from "swr/mutation";
 import { Logo } from "@/components/Logo/Logo";
 import { Button } from "@/components/Button/Button";
-import { type Product, type CheckoutResponse } from "@/lib/types";
-import {
-  isHostedCheckoutResponse,
-  isCustomCheckoutResponse,
-} from "@/lib/checkout-utils";
+import { type Product, type PaymentIntentResponse } from "@/lib/types";
 import { mutationFetcher } from "@/lib/fetcher";
 import { formatPrice, formatInterval } from "@/lib/formatters";
 import { useCustomCheckout } from "@/lib/feature-flags";
@@ -22,11 +18,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const customCheckoutEnabled = useCustomCheckout();
 
   const { trigger, isMutating, error } = useSWRMutation<
-    CheckoutResponse,
+    PaymentIntentResponse,
     Error,
     string,
     FormData
-  >("/api/create-checkout-session", mutationFetcher<CheckoutResponse>);
+  >("/api/create-payment-intent", mutationFetcher<PaymentIntentResponse>);
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,16 +38,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
       const response = await trigger(formData);
 
-      // Route based on checkout type using type guards
-      if (isCustomCheckoutResponse(response)) {
-        // Custom checkout: redirect to custom page with client_secret
-        window.location.href = `/checkout/custom?client_secret=${response.client_secret}&mode=${response.mode}`;
-      } else if (isHostedCheckoutResponse(response)) {
-        // Hosted checkout: redirect to Stripe
-        window.location.href = response.url;
-      } else {
-        throw new Error("Invalid response format");
-      }
+      window.location.href = `/checkout/intents?client_secret=${response.clientSecret}`;
     } catch (err) {
       console.error("Checkout error:", err);
     }
