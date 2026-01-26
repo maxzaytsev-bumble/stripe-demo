@@ -52,6 +52,25 @@ export const IntentsCheckout = () => {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
+      <div className="what-i-want-to-have">
+        <h4>Payment providers</h4>
+        <div className="payment-provider" id="pp-credit-card">
+          render card here
+        </div>
+        <div className="payment-provider" id="pp-pay-pal">
+          render PayPal here
+        </div>
+        <div className="payment-provider" id="pp-apple-pay">
+          render ApplePay here
+        </div>
+        <div className="payment-provider" id="pp-google-pay">
+          render GooglePay here
+        </div>
+        <div className="payment-provider" id="pp-ideal">
+          render iDEAL here
+        </div>
+        <button>submit</button>
+      </div>
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
