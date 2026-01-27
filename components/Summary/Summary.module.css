@@ -1,0 +1,51 @@
+.purchaseSummary {
+  background: #fff;
+  align-items: flex-start;
+  gap: 16px;
+  border: 1px solid #2020201f;
+  border-radius: 16px;
+  display: flex;
+  margin-bottom: 24px;
+  padding: 12px;
+}
+
+.iconWrapper {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: #ffd54f;
+  border-radius: 50%;
+}
+
+.purchaseDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.purchaseTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.productName {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  letter-spacing: -0.3px;
+}
+
+.purchasePrice {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+}
+
+.recurringInfo {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #666;
+  margin: 0;
+}

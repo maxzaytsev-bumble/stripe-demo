@@ -2,11 +2,10 @@
   min-height: 100vh;
   width: 100%;
   background: #fff;
-  padding: 48px 24px;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .content {
@@ -16,64 +15,14 @@
 }
 
 .title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #000;
-  margin: 0 0 24px;
-  text-align: center;
-  letter-spacing: -0.5px;
-}
-
-.purchaseSummary {
-  margin-bottom: 32px;
-  padding: 20px;
-  background: #fff;
-  border: 2px solid #e0e0e0;
-  border-radius: 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.iconWrapper {
-  flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  background: #ffd54f;
-  border-radius: 50%;
-}
-
-.purchaseDetails {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.purchaseTitle {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.productName {
-  font-size: 18px;
-  font-weight: 700;
-  color: #000;
-  letter-spacing: -0.3px;
-}
-
-.purchasePrice {
-  font-size: 16px;
+  color: #202020;
+  font-size: 17px;
+  font-style: normal;
   font-weight: 600;
-  color: #000;
-}
-
-.recurringInfo {
-  font-size: 14px;
-  line-height: 1.4;
-  color: #666;
-  margin: 0;
+  letter-spacing: 0.28px;
+  line-height: 22px;
+  padding: 20px 0;
+  text-align: center;
 }
 
 .form {
@@ -92,7 +41,6 @@
   font-size: 20px;
   font-weight: 700;
   color: #000;
-  margin-bottom: 16px;
   display: block;
   letter-spacing: -0.3px;
 }
@@ -154,74 +102,4 @@
 
 .error {
   color: #d32f2f;
-}
-
-@media (width <= 768px) {
-  .content {
-    padding: 0 16px;
-  }
-
-  .title {
-    font-size: 24px;
-  }
-
-  .productName {
-    font-size: 16px;
-  }
-
-  .purchasePrice {
-    font-size: 14px;
-  }
-
-  .iconWrapper {
-    width: 48px;
-    height: 48px;
-  }
-
-  .sectionLabel {
-    font-size: 18px;
-  }
-}
-
-@media (width <= 480px) {
-  .container {
-    padding: 24px 16px;
-  }
-
-  .content {
-    padding: 0;
-  }
-
-  .title {
-    font-size: 22px;
-  }
-
-  .purchaseSummary {
-    padding: 16px;
-  }
-
-  .productName {
-    font-size: 15px;
-  }
-
-  .purchasePrice {
-    font-size: 13px;
-  }
-
-  .recurringInfo {
-    font-size: 12px;
-  }
-
-  .iconWrapper {
-    width: 44px;
-    height: 44px;
-  }
-
-  .sectionLabel {
-    font-size: 16px;
-  }
-
-  .disclaimer {
-    font-size: 11px;
-  }
 }

@@ -2,9 +2,10 @@
 
 import { useState, FormEvent } from "react";
 import { useCheckout, PaymentElement } from "@stripe/react-stripe-js/checkout";
+import { formatPrice } from "@/lib/formatters";
 import { Button } from "@/components/Button/Button";
 import { EmailInput } from "@/components/EmailInput/EmailInput";
-import { formatPrice, formatInterval } from "@/lib/formatters";
+import { Summary } from "@/components/Summary/Summary";
 import styles from "./CustomCheckoutForm.module.css";
 
 type CustomCheckoutFormProps = {
@@ -96,38 +97,30 @@ export function CustomCheckoutForm({
       <div className={styles.content}>
         <h1 className={styles.title}>Your purchase</h1>
 
-        {product && price && (
-          <div className={styles.purchaseSummary}>
-            <div className={styles.iconWrapper}></div>
-            <div className={styles.purchaseDetails}>
-              <div className={styles.purchaseTitle}>
-                <span className={styles.productName}>{product.name}</span>
-                <span className={styles.purchasePrice}>
-                  {formatPrice(price.amount, price.currency)}
-                </span>
-              </div>
-              {price.recurring && (
-                <p className={styles.recurringInfo}>
-                  {formatPrice(price.amount, price.currency)}
-                  {" " +
-                    formatInterval(
-                      price.recurring.interval,
-                      price.recurring.interval_count,
-                    )}{" "}
-                  starting from the next renewal
-                </p>
-              )}
-            </div>
-          </div>
-        )}
+        <Summary product={product} price={price} />
 
         <form onSubmit={handleSubmit} className={styles.form}>
-          <EmailInput email={email} onChange={setEmail} disabled={isLoading} />
+          {Boolean(1) ? null : (
+            <EmailInput
+              email={email}
+              onChange={setEmail}
+              disabled={isLoading}
+            />
+          )}
 
           <div className={styles.field}>
             <label className={styles.sectionLabel}>Payment method</label>
             <div className={styles.paymentElement}>
-              <PaymentElement />
+              <PaymentElement
+                options={{
+                  layout: {
+                    type: "accordion",
+                    defaultCollapsed: false,
+                    radios: true,
+                    spacedAccordionItems: false,
+                  },
+                }}
+              />
             </div>
           </div>
 
