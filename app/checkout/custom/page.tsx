@@ -66,12 +66,12 @@ function CustomCheckoutContent() {
                 backgroundColor: "#ebebeb",
               },
               ".AccordionItem--selected": {
-                backgroundColor: "#ffd54f",
+                backgroundColor: "#ffdb5b",
                 border: "2px solid #ffd54f",
                 color: "#000000",
               },
               ".AccordionItem--selected:hover": {
-                backgroundColor: "#ffc933",
+                backgroundColor: "#ffdb5b",
               },
               ".Input": {
                 border: "2px solid #e0e0e0",
