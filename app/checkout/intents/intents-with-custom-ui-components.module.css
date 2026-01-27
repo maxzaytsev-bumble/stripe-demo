@@ -1,0 +1,9 @@
+.root {
+  padding: 20px;
+}
+
+.item {
+  border: 2px dotted #ccc;
+  padding: 5px;
+  margin: 10px;
+}

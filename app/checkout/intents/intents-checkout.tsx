@@ -5,6 +5,10 @@ import {
 } from "@stripe/react-stripe-js";
 import { FormEventHandler, useState } from "react";
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
+import { IntentsWithCustomUiComponents } from "@/app/checkout/intents/intents-with-custom-ui-components";
+
+// hard-coded by default
+const FEATURE_FLAG_CUSTOM_COMPONENTS_ENABLED = Boolean(Math.random());
 
 export const IntentsCheckout = () => {
   const stripe = useStripe();
@@ -49,28 +53,19 @@ export const IntentsCheckout = () => {
     setIsLoading(false);
   };
 
+  const renderFormContent = () => {
+    if (FEATURE_FLAG_CUSTOM_COMPONENTS_ENABLED) {
+      return <IntentsWithCustomUiComponents />;
+    } else {
+      return (
+        <PaymentElement id="payment-element" options={paymentElementOptions} />
+      );
+    }
+  };
+
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <div className="what-i-want-to-have">
-        <h4>Payment providers</h4>
-        <div className="payment-provider" id="pp-credit-card">
-          render card here
-        </div>
-        <div className="payment-provider" id="pp-pay-pal">
-          render PayPal here
-        </div>
-        <div className="payment-provider" id="pp-apple-pay">
-          render ApplePay here
-        </div>
-        <div className="payment-provider" id="pp-google-pay">
-          render GooglePay here
-        </div>
-        <div className="payment-provider" id="pp-ideal">
-          render iDEAL here
-        </div>
-        <button>submit</button>
-      </div>
+      {renderFormContent()}
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
