@@ -88,6 +88,29 @@ function CustomCheckoutContent() {
                 fontSize: "14px",
                 color: "#000000",
               },
+              ".RadioIcon": {
+                width: "24px",
+              },
+              ".RadioIconOuter": {
+                stroke: "#000000",
+                strokeWidth: "2",
+                fill: "#ffffff",
+              },
+              ".RadioIconOuter--checked": {
+                stroke: "#000000",
+                strokeWidth: "2",
+                fill: "#ffffff",
+              },
+              ".RadioIconInner": {
+                fill: "transparent",
+                r: "0",
+              },
+              ".RadioIconInner--checked": {
+                fill: "#000000",
+                r: "24",
+                stroke: "#ffffff",
+                strokeWidth: "3",
+              },
             },
           },
         },

@@ -100,13 +100,7 @@ export function CustomCheckoutForm({
         <Summary product={product} price={price} />
 
         <form onSubmit={handleSubmit} className={styles.form}>
-          {Boolean(1) ? null : (
-            <EmailInput
-              email={email}
-              onChange={setEmail}
-              disabled={isLoading}
-            />
-          )}
+          <EmailInput email={email} onChange={setEmail} disabled={isLoading} />
 
           <div className={styles.field}>
             <label className={styles.sectionLabel}>Payment method</label>
