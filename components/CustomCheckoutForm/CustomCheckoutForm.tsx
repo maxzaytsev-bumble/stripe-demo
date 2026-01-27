@@ -117,7 +117,7 @@ export function CustomCheckoutForm({
                     type: "accordion",
                     defaultCollapsed: false,
                     radios: true,
-                    spacedAccordionItems: false,
+                    spacedAccordionItems: true,
                   },
                 }}
               />

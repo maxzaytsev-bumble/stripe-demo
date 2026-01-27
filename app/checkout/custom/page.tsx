@@ -55,22 +55,22 @@ function CustomCheckoutContent() {
               borderRadius: "12px",
             },
             rules: {
-              ".Tab": {
+              ".AccordionItem": {
                 border: "2px solid #e0e0e0",
                 borderRadius: "12px",
                 padding: "16px",
                 backgroundColor: "#f5f5f5",
                 boxShadow: "none",
               },
-              ".Tab:hover": {
+              ".AccordionItem:hover": {
                 backgroundColor: "#ebebeb",
               },
-              ".Tab--selected": {
+              ".AccordionItem--selected": {
                 backgroundColor: "#ffd54f",
                 border: "2px solid #ffd54f",
                 color: "#000000",
               },
-              ".Tab--selected:hover": {
+              ".AccordionItem--selected:hover": {
                 backgroundColor: "#ffc933",
               },
               ".Input": {
