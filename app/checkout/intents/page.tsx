@@ -25,7 +25,7 @@ const IntentsCheckoutContent = () => {
       options={{ clientSecret, appearance, loader }}
       stripe={stripePromise}
     >
-      <IntentsCheckout />
+      <IntentsCheckout clientSecret={clientSecret} />
     </Elements>
   );
 };

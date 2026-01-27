@@ -16,8 +16,9 @@ export async function POST(request: NextRequest) {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: price.unit_amount,
       currency: price.currency,
-      // In the latest version of the API, specifying the `automatic_payment_methods`
-      // parameter is optional because Stripe enables its functionality by default.
+      // automatic_payment_methods enables all payment methods configured in your
+      // Stripe Dashboard (including card, PayPal, etc.). Make sure PayPal is enabled
+      // in Dashboard > Settings > Payment methods for PayPal to work.
       automatic_payment_methods: {
         enabled: true,
       },

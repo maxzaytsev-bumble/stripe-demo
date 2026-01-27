@@ -1,4 +1,6 @@
 import { ReactNode, useState } from "react";
+import { CardForm } from "./payment-methods/CardForm";
+import { PayPalForm } from "./payment-methods/PayPalForm";
 import styles from "./intents-with-custom-ui-components.module.css";
 
 const CustomProviderUi = (props: {
@@ -10,7 +12,9 @@ const CustomProviderUi = (props: {
   const { label, isActive, onClick, children } = props;
   return (
     <div className={styles.item}>
-      <button onClick={onClick}>{label}</button>
+      <button type="button" onClick={onClick}>
+        {label}
+      </button>
       <div style={{ display: isActive ? "block" : "none" }}>{children}</div>
     </div>
   );
@@ -24,45 +28,60 @@ const ProviderTypes = {
 
 type ProviderType = (typeof ProviderTypes)[keyof typeof ProviderTypes];
 
-const elementsToDisplayMap: Record<ProviderType, ReactNode> = {
-  [ProviderTypes.CARD]: <div>card</div>,
-  [ProviderTypes.PAY_PAL]: <div>paypal</div>,
-  [ProviderTypes.APPLE_PAY]: <div>applepay</div>,
-};
-
-type ValueOf<T> = T[keyof T];
-
 type CustomProvider = {
   id: ProviderType;
   label: string;
-  content: ValueOf<typeof elementsToDisplayMap>;
 };
 
 const CUSTOM_PROVIDERS_LIST: CustomProvider[] = [
   {
     id: ProviderTypes.CARD,
     label: "Credit Card",
-    content: elementsToDisplayMap[ProviderTypes.CARD],
   },
   {
     id: ProviderTypes.PAY_PAL,
     label: "PayPal",
-    content: elementsToDisplayMap[ProviderTypes.PAY_PAL],
   },
   {
     id: ProviderTypes.APPLE_PAY,
     label: "ApplePay",
-    content: elementsToDisplayMap[ProviderTypes.APPLE_PAY],
   },
 ];
 
-export const IntentsWithCustomUiComponents = () => {
+export const IntentsWithCustomUiComponents = ({
+  clientSecret,
+  onProcessing,
+  onError,
+}: {
+  clientSecret: string;
+  onProcessing: (isProcessing: boolean) => void;
+  onError: (error: string) => void;
+}) => {
   const [selected, setSelected] = useState<ProviderType>(ProviderTypes.CARD);
+
+  const renderPaymentForm = (type: ProviderType) => {
+    switch (type) {
+      case ProviderTypes.CARD:
+        return <CardForm />;
+      case ProviderTypes.PAY_PAL:
+        return (
+          <PayPalForm
+            clientSecret={clientSecret}
+            onProcessing={onProcessing}
+            onError={onError}
+          />
+        );
+      case ProviderTypes.APPLE_PAY:
+        return <div>Apple Pay integration coming soon</div>;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className={styles.root}>
       <h4>Payment providers</h4>
-      {CUSTOM_PROVIDERS_LIST.map(({ label, content, id }) => {
+      {CUSTOM_PROVIDERS_LIST.map(({ label, id }) => {
         return (
           <CustomProviderUi
             label={label}
@@ -70,7 +89,7 @@ export const IntentsWithCustomUiComponents = () => {
             isActive={selected === id}
             onClick={() => setSelected(id)}
           >
-            {content}
+            {renderPaymentForm(id)}
           </CustomProviderUi>
         );
       })}
