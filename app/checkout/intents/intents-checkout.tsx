@@ -1,20 +1,20 @@
+import { FormEventHandler, useState } from "react";
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { FormEventHandler, useState } from "react";
+import { useCustomUiForIntents } from "@/lib/feature-flags";
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
 import { IntentsWithCustomUiComponents } from "@/app/checkout/intents/intents-with-custom-ui-components";
-
-// hard-coded by default
-const FEATURE_FLAG_CUSTOM_COMPONENTS_ENABLED = Boolean(Math.random());
 
 export const IntentsCheckout = ({ clientSecret }: { clientSecret: string }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const FEATURE_FLAG_CUSTOM_COMPONENTS_ENABLED = useCustomUiForIntents();
 
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: "accordion",

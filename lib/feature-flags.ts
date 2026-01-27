@@ -12,3 +12,10 @@ export function useCustomCheckout(): boolean {
     process.env.NEXT_PUBLIC_USE_CUSTOM_CHECKOUT === "1"
   );
 }
+
+export function useCustomUiForIntents() {
+  return (
+    process.env.NEXT_PUBLIC_USE_CUSTOM_PAYMENT_TABS === "true" ||
+    process.env.NEXT_PUBLIC_USE_CUSTOM_PAYMENT_TABS === "1"
+  );
+}
