@@ -21,3 +21,26 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
+
+.cardButton {
+  width: 100%;
+  padding: 12px 24px;
+  background-color: #635bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 16px;
+}
+
+.cardButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.cardButton:hover:not(:disabled) {
+  background-color: #5146e5;
+}

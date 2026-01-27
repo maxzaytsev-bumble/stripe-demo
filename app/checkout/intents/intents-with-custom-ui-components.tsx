@@ -62,7 +62,13 @@ export const IntentsWithCustomUiComponents = ({
   const renderPaymentForm = (type: ProviderType) => {
     switch (type) {
       case ProviderTypes.CARD:
-        return <CardForm />;
+        return (
+          <CardForm
+            clientSecret={clientSecret}
+            onProcessing={onProcessing}
+            onError={onError}
+          />
+        );
       case ProviderTypes.PAY_PAL:
         return (
           <PayPalForm

@@ -48,6 +48,17 @@ export type SessionStatus = {
 };
 
 /**
+ * Payment Intent status response from Stripe
+ */
+export type PaymentIntentStatus = {
+  status: string;
+  amount: number;
+  currency: string;
+  customer_email: string | null;
+  payment_method_types: string[];
+};
+
+/**
  * Checkout details response (product and price info)
  */
 export type CheckoutDetails = {

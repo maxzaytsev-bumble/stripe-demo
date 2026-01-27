@@ -43,7 +43,7 @@ export const PayPalForm = ({
         clientSecret,
         confirmParams: {
           payment_method: paymentMethod.id,
-          return_url: `${window.location.origin}/complete`,
+          return_url: `${window.location.origin}/checkout/intents/complete`,
         },
       });
 
